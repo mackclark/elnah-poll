@@ -14,22 +14,35 @@ class App extends Component {
         
         this.state = {
             questions: questions,
+            index: 0,
         };
-        console.log(this.state.questions)
     }
+
+    nextQuestion = () => {
+        if(this.state.index < this.state.questions.length - 1) {
+            this.setState({index: this.state.index + 1})
+        } 
+    }
+
+    selectAnswer = (answer) => {
+       console.log(answer)
+        
+    }
+
     render() {
         return (
             <div className="App">
 
                 <div className="App-header">
-
-                { this.state.questions.map((question, i) => (
+               
                     <div>
-                        <PollQuestion question={question.question}></PollQuestion>
-                        <PollAnswers answers={question.answer_choices}></PollAnswers>
+                        <PollQuestion question={this.state.questions[this.state.index].question}></PollQuestion>
+                        <PollAnswers answers={this.state.questions[this.state.index].answer_choices}
+                                     selectAnswer={this.selectAnswer}></PollAnswers>
                     </div>
-                ))}
+                
                 </div>
+                <div onClick={this.nextQuestion}> Next </div>
             </div>
         );
     }
